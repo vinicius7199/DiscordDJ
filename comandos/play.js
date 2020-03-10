@@ -108,10 +108,10 @@ try {
                 if (selected) {
                     let msc = message.content.replace('!!play', `${selected.link}`);
                     message.channel.send({ embed: Embed })
-                    //playlist.push(`${selected.title}`)
-                    msc.push(playlist[0])
+                    playlist.push(`${selected.title}`)
+                    //msc.push(playlist[0])
                     if (ytdl.validateURL(msc)) {
-                    voiceChannel.connection.playStream(ytdl(playlist));
+                    voiceChannel.connection.playStream(ytdl(msc));
                     }
                     if(!playlist[0])
                     {
