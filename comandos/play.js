@@ -13,6 +13,9 @@ playlist = [];
 
 module.exports
 try {
+    function emoji(id) {
+        return bot.emojis.get(id).toString();
+    }
 
     client.on('ready', () => console.log("Online!"));
     client.on('message', async message => {
@@ -32,12 +35,12 @@ try {
 
             let embed = new discord.RichEmbed()
                 .setColor("BLUE")
-                .setDescription("Me diga, qual o nome da música que você quer que eu toque?")
-                .setTitle("Play")
+                .setDescription(emoji("683330387719618736") +" Me diga, qual o nome da música que você quer que eu toque?")
+                .setTitle(emoji("685935526968164469") + " Play")
                 .setThumbnail(client.user.displayAvatarURL)
                 .setFooter('DJ Vinicius')
                 .setTimestamp();
-            let embedMsg = await message.channel.send(embed) 
+            let embedMsg = await message.channel.send(embed)
             console.log("Play utilizado");
             let filter = m => m.author.id === message.author.id;
             let query = await message.channel.awaitMessages(filter, { max: 1 });
@@ -59,26 +62,29 @@ try {
                 }).catch(err => console.log(err));
 
                 filter = m => (m.author.id === message.author.id) && m.content >= 1 && m.content <= youtubeResults.length;
-                let collected = await message.channel.awaitMessages(filter, { maxMatches: 1, time:30000, errors:['time'] });
-//                  let collected =  await message.channel.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
- //                 collected.on('collect', async (reaction, awaitReactions) =>
-   //               {
-     //               if(reaction.emoji.id === ''){ 
-                        
-       //             }
-         //         })
+                let collected = await message.channel.awaitMessages(filter, { maxMatches: 1, time: 30000, errors: ['time'] });
+                //                  let collected =  await message.channel.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                //                 collected.on('collect', async (reaction, awaitReactions) =>
+                //               {
+                //               if(reaction.emoji.id === ''){ 
+
+                //             }
+                //         })
                 let selected = youtubeResults[collected.first().content - 1];
 
-/*                    embed = new discord.RichEmbed()
-                        .setTitle(`Estou tocando`)
-                        .setColor("BLUE")
-                        .setURL(`${selected.link}`)
-//                       .setDescription(`${selected.description}`)
-                        .setDescription(`${selected.title}`)
-                        .setThumbnail(`${selected.thumbnails.default.url}`)
-                        .setFooter('DJ Vinicius')
-                        .setTimestamp();
-*/   const Embed = {
+                /*                    embed = new discord.RichEmbed()
+                                        .setTitle(`Estou tocando`)
+                                        .setColor("BLUE")
+                                        .setURL(`${selected.link}`)
+                //                       .setDescription(`${selected.description}`)
+                                        .setDescription(`${selected.title}`)
+                                        .setThumbnail(`${selected.thumbnails.default.url}`)
+                                        .setFooter('DJ Vinicius')
+                                        .setTimestamp();
+                                        
+                */
+                const avatar = message.author.displayAvatarURL;
+                const Embed = {
                     color: 0x0099ff,
                     title: `Música`,
                     author: {
@@ -99,8 +105,8 @@ try {
 
                     timestamp: new Date(),
                     footer: {
-                        text: 'DJ Vinicius',
-                        icon_url: 'https://cdn.discordapp.com/avatars/676839841215807536/b5acd83ed783240c80d9dd85bbf84f5d.png?size=128',
+                        text: `Solicitado por ${message.author.tag}`,
+                        icon_url: avatar,
                     },
                 };
 
@@ -111,10 +117,9 @@ try {
                     playlist.push(`${selected.title}`)
                     //msc.push(playlist[0])
                     if (ytdl.validateURL(msc)) {
-                    voiceChannel.connection.playStream(ytdl(msc));
+                        voiceChannel.connection.playStream(ytdl(msc));
                     }
-                    if(!playlist[0])
-                    {
+                    if (!playlist[0]) {
                         console.log("Música acabou")
                         const voiceChannel = message.member.voiceChannel;
                         voiceChannel.leave();
@@ -123,24 +128,26 @@ try {
             }
         }
         if (message.content.toLowerCase() === '!!stop') {
+            console.log("Stop Utilizado")
+            if (!playlist[0]) return message.reply("Não estou tocando nada!")
             const voiceChannel = message.member.voiceChannel;
             playlist = [];
             voiceChannel.leave();
-            if(!playlist[0]) return message.reply("Não estou tocando nada!")
-            console.log("Stop Utilizado")
-    }
+            message.reply
+        }
 
-    if (message.content.toLowerCase() === '!!tocando') {
-        if(!playlist[0]){
-    message.reply("Não estou tocando nada!")
-}else {
-            embed = new discord.RichEmbed()
-            .setTitle("Tocando atualmente")
-            .setColor("BLUE")
-            .setDescription(playlist[0])
-        message.channel.send(embed)
-}
-}
+        if (message.content.toLowerCase() === '!!tocando') {
+            console.log("Tocando Utilizado")
+            if (!playlist[0]) {
+                message.reply("Não estou tocando nada!")
+            } else {
+                embed = new discord.RichEmbed()
+                    .setTitle("Tocando atualmente")
+                    .setColor("BLUE")
+                    .setDescription(playlist[0])
+                message.channel.send(embed)
+            }
+        }
     })
 } catch (error) {
     console.log(error)
