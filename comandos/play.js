@@ -60,7 +60,7 @@ try {
 
                 filter = m => (m.author.id === message.author.id) && m.content >= 1 && m.content <= youtubeResults.length;
                 let collected = await message.channel.awaitMessages(filter, { maxMatches: 1, time:30000, errors:['time'] });
-//                  let collected =  await message.channel.awaitReactions(filter, { max: 4, time: 60000, errors: ['time'] })
+//                  let collected =  await message.channel.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
  //                 collected.on('collect', async (reaction, awaitReactions) =>
    //               {
      //               if(reaction.emoji.id === ''){ 
@@ -109,11 +109,11 @@ try {
                     let msc = message.content.replace('!!play', `${selected.link}`);
                     message.channel.send({ embed: Embed })
                     //playlist.push(`${selected.title}`)
-                    //msc.push(playlist[0])
+                    msc.push(playlist[0])
                     if (ytdl.validateURL(msc)) {
-                    voiceChannel.connection.playStream(ytdl(msc));
+                    voiceChannel.connection.playStream(ytdl(playlist));
                     }
-                    if(!playlist)
+                    if(!playlist[0])
                     {
                         console.log("Música acabou")
                         const voiceChannel = message.member.voiceChannel;
@@ -139,7 +139,6 @@ try {
             .setColor("BLUE")
             .setDescription(playlist[0])
         message.channel.send(embed)
-//    message.channel.send("Tocando agora: " + playlist[0])
 }
 }
     })
