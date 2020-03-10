@@ -14,7 +14,7 @@ playlist = [];
 module.exports
 try {
     function emoji(id) {
-        return bot.emojis.get(id).toString();
+        return client.emojis.get(id).toString();
     }
 
     client.on('ready', () => console.log("Online!"));
