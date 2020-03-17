@@ -10,7 +10,7 @@ module.exports = {
         let pEmbed = new Discord.RichEmbed()
             .setTitle("Ping")
             .setThumbnail(URL = 'https://images-ext-1.discordapp.net/external/C9swIZtREziCU7Oc_ndPu92zMZC3fNgrUEIuENB-oNs/%3Fwidth%3D499%26height%3D499/https/media.discordapp.net/attachments/500811624219934720/510972559068495882/stopwatch_1.png')
-            .addField(`A latência do bot é **${ms.createdTimestamp - message.createdTimestamp}**ms.`, `A latência da API é **${Math.round(clientping)}**ms.`)
+            .addField(`A latência do bot é **${ms.createdTimestamp - message.createdTimestamp}**ms.`, `A latência da API é **${Math.floor(client.ping)}**ms.`)
             .setColor("#0x0099ff")
             .setFooter('ViniciusDJ')
             .setTimestamp()
