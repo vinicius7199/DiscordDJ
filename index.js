@@ -4,14 +4,14 @@ const Client = require('./client/Client');
 const discloud = require("discloud-status");
 
 const serverStats = {
-	djRAM: '681298599560216580',
-	pingID: '682027924186202112',
-	totalUsersID: '682068696293703684',
+	djRAM: 'CHANNEL-ID',
+	pingID: 'CHANNEL-ID',
+	totalUsersID: 'CHANNEL-ID',
 
 	//uptime
-	diassID: '682028014799814736',
-	horasID: '682028078482194474',
-	minnID: '682028118747381767',
+	diassID: 'CHANNEL-ID',
+	horasID: 'CHANNEL-ID',
+	minnID: 'CHANNEL-ID',
 }
 
 const {
